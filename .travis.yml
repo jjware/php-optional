@@ -3,5 +3,4 @@ php:
   - '5.6'
   - '7.0'
   - nightly
-before_script:
-  - composer install --no-dev
+install: composer install
