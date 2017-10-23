@@ -16,6 +16,14 @@ class OptionalTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Optional::of(1), new PresentOptional(1));
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testOfWithNull()
+    {
+        Optional::of(null);
+    }
+
     public function testOfNullableForSome()
     {
         $this->assertEquals(Optional::ofNullable(1), new PresentOptional(1));
@@ -63,7 +71,7 @@ class OptionalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      */
     public function testOrElseThrowWhenEmpty()
     {
@@ -102,5 +110,59 @@ class OptionalTest extends \PHPUnit_Framework_TestCase
             $t->value = $x;
         });
         $this->assertEquals($t->value, 0);
+    }
+
+    public function testMapWhenPresent()
+    {
+        $value = Optional::of(1)->map(function ($x) {
+            return 'test' . $x;
+        });
+        $this->assertEquals($value, Optional::of('test1'));
+    }
+
+    public function testMapWhenEmpty()
+    {
+        $value = Optional::empty()->map(function ($x) {
+            return 'test' . $x;
+        });
+        $this->assertEquals($value, Optional::empty());
+    }
+
+    public function testFilterWhenPresentEvaluateTrue()
+    {
+        $value = Optional::of(1)->filter(function ($x) {
+            return $x == 1;
+        });
+        $this->assertEquals($value, Optional::of(1));
+    }
+
+    public function testFilterWhenPresentEvaluateFalse()
+    {
+        $value = Optional::of(1)->filter(function ($x) {
+            return $x < 1;
+        });
+        $this->assertEquals($value, Optional::empty());
+    }
+
+    public function testFilterWhenEmpty()
+    {
+        $value = Optional::empty()->filter(function ($x) {
+            return $x == 1;
+        });
+        $this->assertEquals($value, Optional::empty());
+    }
+
+    public function testGetWhenPresent()
+    {
+        $value = Optional::of(1)->get();
+        $this->assertEquals($value, 1);
+    }
+
+    /**
+     * @expectedException UnderflowException
+     */
+    public function testGetWhenEmpty()
+    {
+        Optional::empty()->get();
     }
 }

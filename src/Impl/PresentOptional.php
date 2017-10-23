@@ -52,6 +52,6 @@ class PresentOptional extends Optional
     }
 
     public function get() {
-        throw $this->value;
+        return $this->value;
     }
 }
