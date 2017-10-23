@@ -1,0 +1,21 @@
+
+{
+  "name": "jjware/php-optional",
+  "description": "Library for working with optional values in PHP",
+  "keywords": ["library", "optional"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [{
+    "name": "Joshua Jones",
+    "email": "joshua.jones.software@gmail.com"
+  }],
+  "autoload": {
+    "psr-4": {"JJWare\\Util\\": "src"}
+  },
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "require-dev": {
+    "phpUnit/phpUnit": "^5.0"
+  }
+}
