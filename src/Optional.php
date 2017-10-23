@@ -17,7 +17,7 @@ abstract class Optional
      * @param mixed|null $value
      * @return Optional
      */
-    public static function ofNullable($value)
+    public static function ofNullable($value) : Optional
     {
         return is_null($value) ? static::empty() : new PresentOptional($value);
     }
@@ -26,7 +26,7 @@ abstract class Optional
      * Returns an empty Optional
      * @return Optional
      */
-    public static function empty()
+    public static function empty() : Optional
     {
         if (is_null(static::$EMPTY_VALUE)) {
             static::$EMPTY_VALUE = new EmptyOptional();
@@ -42,7 +42,7 @@ abstract class Optional
      * @return Optional
      * @throws InvalidArgumentException
      */
-    public static function of($value)
+    public static function of($value) : Optional
     {
         if (is_null($value)) {
             throw new InvalidArgumentException("Null value");
@@ -91,14 +91,14 @@ abstract class Optional
      * @param callable $func
      * @return Optional
      */
-    public abstract function map(callable $func);
+    public abstract function map(callable $func) : Optional;
 
     /**
      * Returns a new Optional containing the value if present, otherwise returns an empty Optional
      * @param callable $predicate
      * @return Optional
      */
-    public abstract function filter(callable $predicate);
+    public abstract function filter(callable $predicate) : Optional;
 
     /**
      * Returns value if present, otherwise throws UnderflowException

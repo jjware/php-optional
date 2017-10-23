@@ -31,11 +31,11 @@ class EmptyOptional extends Optional
         return false;
     }
 
-    public function map(callable $func) {
+    public function map(callable $func) : Optional {
         return $this;
     }
 
-    public function filter(callable $predicate)
+    public function filter(callable $predicate) : Optional
     {
         return $this;
     }

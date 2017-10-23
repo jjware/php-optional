@@ -38,11 +38,11 @@ class PresentOptional extends Optional
         return true;
     }
 
-    public function map(callable $func) {
+    public function map(callable $func) : Optional {
         return Optional::ofNullable(call_user_func($func, $this->value));
     }
 
-    public function filter(callable $predicate)
+    public function filter(callable $predicate) : Optional
     {
         if (call_user_func($predicate, $this->value)) {
             return $this;
