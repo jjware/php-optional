@@ -4,7 +4,7 @@ use JJWare\Util\Impl\EmptyOptional;
 use JJWare\Util\Impl\PresentOptional;
 use JJWare\Util\Optional;
 
-class OptionalTest extends \PHPUnit_Framework_TestCase
+class OptionalTest extends PHPUnit_Framework_TestCase
 {
     public function testEmpty()
     {
