@@ -70,12 +70,12 @@ $scheme = getSetting('port')->flatMap('getSchemeForPort')->orElse('http');
 You may not want the value unless it meets specific criteria:
 ```php
 $port = getSetting('port')->filter(function ($x) {
-    return $x > 0 && $x < 10;
+    return $x >= 1024 && $x <= 49151;
 })->orElse(8080);
 
 // or using a static method reference
 
-$port = getSetting('port')->filter('Filters::positiveLessThanTen');
+$port = getSetting('port')->filter('Filters::registeredPort');
 ```
 Let's say you have a need to test for the presence of a value:
 ```php
