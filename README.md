@@ -60,8 +60,12 @@ $port = getSetting('port')->map('intval')->orElse(8080);
 You may not want the value unless it meets specific criteria:
 ```php
 $port = getSetting('port')->filter(function ($x) {
-    return $x > 8000 && $x < 9000;
+    return $x > 0 && $x < 10;
 })->orElse(8080);
+
+// or using a static method reference
+
+$port = getSetting('port')->filter('Filters::positiveLessThanTen');
 ```
 Let's say you have a need to test for the presence of a value:
 ```php
