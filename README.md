@@ -39,13 +39,13 @@ $port = getSetting('port')->orElse(8080);
 ```
 If your default value requires expensive calculation or calls to external resources, you may only want to get the default value when necessary:
 ```php
-$port = getSetting('port')->orElseGet(function () {
-    return getDefaultPortFromDatabase();
+$port = getSetting('port')->orElseGet(function () use ($db) {
+    return $db->getDefaultPortFromDatabase();
 });
 
-// or as a method reference
+// or using an instance method reference
 
-$port = getSetting('port')->orElseGet('DB::getDefaultPort');
+$port = getSetting('port')->orElseGet([$db, 'getDefaultPortFromDatabase']);
 ```
 You may need to change the value within the `Optional` in some way if it exists:
 ```php
@@ -62,4 +62,12 @@ You may not want the value unless it meets specific criteria:
 $port = getSetting('port')->filter(function ($x) {
     return $x > 8000 && $x < 9000;
 })->orElse(8080);
+```
+Let's say you have a need to test for the presence of a value:
+```php
+$port = getSetting('port');
+
+if ($port->isPresent()) {
+    $value = $port->get();
+}
 ```

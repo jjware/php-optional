@@ -54,6 +54,13 @@ class OptionalTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value, 1);
     }
 
+    public function testOrElseGetWhenEmptyUsingInstanceMethodReference()
+    {
+        $o = new Mock();
+        $value = Optional::empty()->orElseGet([$o, 'getThree']);
+        $this->assertEquals($value, 3);
+    }
+
     public function testOrElseGetWhenEmpty()
     {
         $value = Optional::empty()->orElseGet(function () {
@@ -180,5 +187,13 @@ class OptionalTest extends PHPUnit_Framework_TestCase
     public function testGetWhenEmpty()
     {
         Optional::empty()->get();
+    }
+}
+
+class Mock
+{
+    public function getThree(): int
+    {
+        return 3;
     }
 }
