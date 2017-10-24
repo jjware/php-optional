@@ -57,6 +57,16 @@ $port = getSetting('port')->map(function ($x) {
 
 $port = getSetting('port')->map('intval')->orElse(8080);
 ```
+You may have a need to map to an entirely different `Optional`:
+```php
+$scheme = getSetting('port')->flatMap(function ($x) {
+   return getSchemeForPort($x);
+})->orElse('http');
+
+// or as a function reference
+
+$scheme = getSetting('port')->flatMap('getSchemeForPort')->orElse('http');
+```
 You may not want the value unless it meets specific criteria:
 ```php
 $port = getSetting('port')->filter(function ($x) {
