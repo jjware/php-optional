@@ -128,6 +128,22 @@ class OptionalTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value, Optional::empty());
     }
 
+    public function testFlatMapWhenPresent()
+    {
+        $value = Optional::of(1)->flatMap(function ($x) {
+            return Optional::of($x + 1);
+        })->get();
+        $this->assertEquals($value, 2);
+    }
+
+    public function testFlatMapWhenEmpty()
+    {
+        $value = Optional::empty()->flatMap(function ($x) {
+            return Optional::of($x + 1);
+        })->orElse(0);
+        $this->assertEquals($value, 0);
+    }
+
     public function testFilterWhenPresentEvaluateTrue()
     {
         $value = Optional::of(1)->filter(function ($x) {
