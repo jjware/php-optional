@@ -47,6 +47,12 @@ $port = getSetting('port')->orElseGet(function () use ($db) {
 
 $port = getSetting('port')->orElseGet([$db, 'getDefaultPortFromDatabase']);
 ```
+The absence of a value may be an exceptional case for you:
+```php
+$port = getSetting('port')->orElseThrow(function () {
+   return new UnderflowException("setting does not exist");
+});
+```
 You may need to change the value within the `Optional` in some way if it exists:
 ```php
 $port = getSetting('port')->map(function ($x) {
@@ -75,7 +81,17 @@ $port = getSetting('port')->filter(function ($x) {
 
 // or using a static method reference
 
-$port = getSetting('port')->filter('Filters::registeredPort');
+$port = getSetting('port')->filter('Filters::registeredPort')->orElse(8080);
+```
+You may want to do something if the value is present:
+```php
+getSetting('port')->ifPresent(function ($x) use ($configBuilder) {
+    $configBuilder->setPort($x);
+});
+
+// or as an instance method reference
+
+getSetting('port')->ifPresent([$configBuilder, 'setPort']);
 ```
 Let's say you have a need to test for the presence of a value:
 ```php
